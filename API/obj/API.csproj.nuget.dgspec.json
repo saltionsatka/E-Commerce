@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\usrer\\source\\repos\\E-Commerce\\ReStore\\API\\API.csproj": {}
+    "C:\\Users\\usrer\\source\\repos\\E-Commerce\\ReStore\\E-Commerce\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\usrer\\source\\repos\\E-Commerce\\ReStore\\API\\API.csproj": {
+    "C:\\Users\\usrer\\source\\repos\\E-Commerce\\ReStore\\E-Commerce\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\usrer\\source\\repos\\E-Commerce\\ReStore\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\usrer\\source\\repos\\E-Commerce\\ReStore\\E-Commerce\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\usrer\\source\\repos\\E-Commerce\\ReStore\\API\\API.csproj",
+        "projectPath": "C:\\Users\\usrer\\source\\repos\\E-Commerce\\ReStore\\E-Commerce\\API\\API.csproj",
         "packagesPath": "C:\\Users\\usrer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\usrer\\source\\repos\\E-Commerce\\ReStore\\API\\obj\\",
+        "outputPath": "C:\\Users\\usrer\\source\\repos\\E-Commerce\\ReStore\\E-Commerce\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\usrer\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.3, )"
