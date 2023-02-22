@@ -1,3 +1,4 @@
+import { Outlet } from '@mui/icons-material'
 import {
   Container,
   createTheme,
@@ -5,7 +6,6 @@ import {
   ThemeProvider,
 } from '@mui/material'
 import { useState } from 'react'
-import Catalog from '../../features/catalog/Catalog'
 import Header from './Header'
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
       <CssBaseline /> {/*Removes the margin in all browsers*/}
       <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
       <Container>
-        <Catalog />
+        <Outlet />
       </Container>
     </ThemeProvider>
   )
