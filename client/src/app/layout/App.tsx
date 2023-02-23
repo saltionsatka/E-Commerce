@@ -1,4 +1,3 @@
-import { Outlet } from '@mui/icons-material'
 import {
   Container,
   createTheme,
@@ -6,6 +5,7 @@ import {
   ThemeProvider,
 } from '@mui/material'
 import { useState } from 'react'
+import { Outlet } from 'react-router-dom'
 import Header from './Header'
 
 function App() {
