@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using API.Data;
+using API.Middleware;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,8 @@ builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.Re
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
