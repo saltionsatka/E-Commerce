@@ -36,4 +36,9 @@ export function StoreProvider({ children }: PropsWithChildren<any>) {
       })
     }
   }
+  return (
+    <StoreContext.Provider value={{ basket, setBasket, removeItem }}>
+      {children}
+    </StoreContext.Provider>
+  )
 }
