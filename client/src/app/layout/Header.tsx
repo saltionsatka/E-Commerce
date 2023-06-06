@@ -2,7 +2,6 @@ import { ShoppingCart } from '@mui/icons-material'
 import {
   AppBar,
   Badge,
-  Box,
   IconButton,
   List,
   ListItem,
@@ -10,6 +9,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material'
+import { Box } from '@mui/system'
 import { Link, NavLink } from 'react-router-dom'
 import { useAppSelector } from '../store/configureStore'
 import SignedInMenu from './SignedInMenu'
@@ -25,32 +25,30 @@ const rightLinks = [
   { title: 'register', path: '/register' },
 ]
 
-const NavStyles = [
-  {
-    color: 'inherit',
-    textDecoration: 'none',
-    typography: 'h6',
-    '&:hover': {
-      color: 'grey.500',
-    },
-    '&.active': {
-      color: 'text.secondary',
-    },
+const navStyles = {
+  color: 'inherit',
+  textDecoration: 'none',
+  typography: 'h6',
+  '&:hover': {
+    color: 'grey.500',
   },
-]
+  '&.active': {
+    color: 'text.secondary',
+  },
+}
 
 interface Props {
   darkMode: boolean
   handleThemeChange: () => void
 }
 
-export default function Header({ darkMode, handleThemeChange }: Props) {
+export default function Header({ handleThemeChange, darkMode }: Props) {
   const { basket } = useAppSelector((state) => state.basket)
   const { user } = useAppSelector((state) => state.account)
   const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
-    <AppBar position="static" sx={{ mb: 4 }}>
+    <AppBar position="static">
       <Toolbar
         sx={{
           display: 'flex',
@@ -59,7 +57,7 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
         }}
       >
         <Box display="flex" alignItems="center">
-          <Typography variant="h6" component={NavLink} to="/" sx={NavStyles}>
+          <Typography variant="h6" component={NavLink} to="/" sx={navStyles}>
             RE-STORE
           </Typography>
           <Switch checked={darkMode} onChange={handleThemeChange} />
@@ -67,10 +65,15 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
 
         <List sx={{ display: 'flex' }}>
           {midLinks.map(({ title, path }) => (
-            <ListItem component={NavLink} to={path} key={path} sx={NavStyles}>
+            <ListItem component={NavLink} to={path} key={path} sx={navStyles}>
               {title.toUpperCase()}
             </ListItem>
           ))}
+          {user && user.roles?.includes('Admin') && (
+            <ListItem component={NavLink} to={'/inventory'} sx={navStyles}>
+              INVENTORY
+            </ListItem>
+          )}
         </List>
 
         <Box display="flex" alignItems="center">
@@ -86,6 +89,7 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
               <ShoppingCart />
             </Badge>
           </IconButton>
+
           {user ? (
             <SignedInMenu />
           ) : (
@@ -95,7 +99,7 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
                   component={NavLink}
                   to={path}
                   key={path}
-                  sx={NavStyles}
+                  sx={navStyles}
                 >
                   {title.toUpperCase()}
                 </ListItem>

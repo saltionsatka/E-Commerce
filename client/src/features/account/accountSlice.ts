@@ -52,35 +52,37 @@ export const fetchCurrentUser = createAsyncThunk<User>(
 )
 
 export const accountSlice = createSlice({
-  name: 'account',
-  initialState,
-  reducers: {
-    signOut: (state) => {
-      state.user = null
-      localStorage.removeItem('user')
-      router.navigate('/')
+    name: 'account',
+    initialState,
+    reducers: {
+        signOut: (state) => {
+            state.user = null;
+            localStorage.removeItem('user');
+            router.navigate('/');
+        },
+        setUser: (state, action) => {
+            let claims = JSON.parse(atob(action.payload.token.split('.')[1])); 
+            let roles = claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+            state.user = {...action.payload, roles: typeof(roles) === 'string' ? [roles] : roles}; 
+        }
     },
-    setUser: (state, action) => {
-      state.user = action.payload
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchCurrentUser.rejected, (state) => {
-      state.user = null
-      localStorage.removeItem('user')
-      toast.error('Session expire - please login again')
-      router.navigate('/')
+    extraReducers: (builder => {
+        builder.addCase(fetchCurrentUser.rejected, (state) => {
+            state.user = null;
+            localStorage.removeItem('user');
+            toast.error('Session expired - please login again');
+            router.navigate('/');
+        })
+        builder.addMatcher(isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled), (state, action) => {
+            let claims = JSON.parse(atob(action.payload.token.split('.')[1])); 
+            let roles = claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+            state.user = {...action.payload, roles: typeof(roles) === 'string' ? [roles] : roles};  
+        });
+        builder.addMatcher(isAnyOf(signInUser.rejected), (state, action) => {
+            throw action.payload;
+        })
     })
-    builder.addMatcher(
-      isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled),
-      (state, action) => {
-        state.user = action.payload
-      },
-    )
-    builder.addMatcher(isAnyOf(signInUser.rejected), (state, action) => {
-      throw action.payload;
-    })
-  },
 })
+
 
 export const { signOut, setUser } = accountSlice.actions
